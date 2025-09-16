@@ -67,6 +67,31 @@ bool isPalindrome(string s) {
     }
 }
 
+bool isPalindrome2(string s) {
+    string cleaned;
+
+    // Создаем строку только из букв и цифр
+    for (char c : s) {
+        if (isalnum(c)) {
+            cleaned += tolower(c);
+        }
+    }
+
+    // Проверяем, является ли очищенная строка палиндромом
+    int left = 0;
+    int right = cleaned.length() - 1;
+
+    while (left < right) {
+        if (cleaned[left] != cleaned[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+
+    return true;
+}
+
 int main() {
     const int size = 20;
     int arr1[size] = { 64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 164, 134, 125, 112, 122, 111, 190, 188, 176, 150 };
@@ -101,16 +126,30 @@ int main() {
     string test4 = "Madam, I0i'm Adam";
 
     cout << boolalpha;
-    start = chrono::high_resolution_clock::now();
+    auto start3 = chrono::high_resolution_clock::now();
     cout << "\"" << test1 << "\" -> " << isPalindrome(test1) << endl;
-    end = chrono::high_resolution_clock::now();
-    auto duration3 = chrono::duration_cast<chrono::nanoseconds>(end - start);
-    cout << "Время isPalindrome: " << duration2.count() << " микросекунд" << endl;
+    auto end3 = chrono::high_resolution_clock::now();
+    auto duration3 = chrono::duration_cast<chrono::nanoseconds>(end3 - start3);
+    cout << "Время isPalindrome: " << duration3.count() << " микросекунд" << endl;
 
     cout << "\"" << test2 << "\" -> " << isPalindrome(test2) << endl;
     cout << "\"" << test3 << "\" -> " << isPalindrome(test3) << endl;
     cout << "\"" << test4 << "\" -> " << isPalindrome(test4) << endl;
     cout << noboolalpha;
+
+    cout << boolalpha;
+    auto start4 = chrono::high_resolution_clock::now();
+    cout << "\"" << test1 << "\" -> " << isPalindrome2(test1) << endl;
+    auto end4 = chrono::high_resolution_clock::now();
+    auto duration4 = chrono::duration_cast<chrono::nanoseconds>(end4 - start4);
+    cout << "Время isPalindrome: " << duration4.count() << " микросекунд" << endl;
+
+    cout << "\"" << test2 << "\" -> " << isPalindrome2(test2) << endl;
+    cout << "\"" << test3 << "\" -> " << isPalindrome2(test3) << endl;
+    cout << "\"" << test4 << "\" -> " << isPalindrome2(test4) << endl;
+    cout << noboolalpha;
+
+
 
     return 0;
 }
