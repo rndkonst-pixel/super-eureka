@@ -1,13 +1,17 @@
 ﻿#include <iostream>
 #include <vector>
 #include <chrono>
+#include <string>
+#include <algorithm>
+
+using namespace std;
 
 // Функция для печати массива
 void printArray(int arr[], int size) {
     for (int i = 0; i < size; i++) {
-        std::cout << arr[i] << " ";
+        cout << arr[i] << " ";
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 // Пузырьковая сортировка с оптимизацией
@@ -16,7 +20,7 @@ void bubbleSort(int arr[], int size) {
         bool swapped = false;
         for (int j = 0; j < size - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
-                std::swap(arr[j], arr[j + 1]);
+                swap(arr[j], arr[j + 1]);
                 //swapped = true;
             }
         }
@@ -38,33 +42,75 @@ void insertionSort(int arr[], int size) {
     }
 }
 
+bool isPalindrome(string s) {
+    int left = 0;
+    int right = s.length() - 1;
+
+    while (left < right) {
+        // Пропускаем небуквенные и нецифровые символы слева
+        while (left < right && !isalnum(s[left])) {
+            left++;
+        }
+
+        // Пропускаем небуквенные и нецифровые символы справа
+        while (left < right && !isalnum(s[right])) {
+            right--;
+        }
+
+        // Сравниваем символы (без учета регистра)
+        if (tolower(s[left]) != tolower(s[right])) {
+            return false;
+        }
+
+        left++;
+        right--;
+    }
+}
+
 int main() {
     const int size = 20;
     int arr1[size] = { 64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 164, 134, 125, 112, 122, 111, 190, 188, 176, 150 };
     int arr2[size] = { 64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 164, 134, 125, 112, 122, 111, 190, 188, 176, 150 };
 
-    std::cout << "Исходный массив: ";
+    cout << "Исходный массив: ";
     printArray(arr1, size);
 
     // Тестируем пузырьковую сортировку
-    auto start = std::chrono::high_resolution_clock::now();
+    auto start = chrono::high_resolution_clock::now();
     bubbleSort(arr1, size);
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    auto end = chrono::high_resolution_clock::now();
+    auto duration1 = chrono::duration_cast<chrono::nanoseconds>(end - start);
 
-    std::cout << "После пузырьковой сортировки: ";
+    cout << "После пузырьковой сортировки: ";
     printArray(arr1, size);
-    std::cout << "Время: " << duration1.count() << " микросекунд" << std::endl;
+    cout << "Время: " << duration1.count() << " микросекунд" << endl;
 
     // Тестируем сортировку вставками
-    start = std::chrono::high_resolution_clock::now();
+    start = chrono::high_resolution_clock::now();
     insertionSort(arr2, size);
-    end = std::chrono::high_resolution_clock::now();
-    auto duration2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+    end = chrono::high_resolution_clock::now();
+    auto duration2 = chrono::duration_cast<chrono::nanoseconds>(end - start);
 
-    std::cout << "После сортировки вставками: ";
+    cout << "После сортировки вставками: ";
     printArray(arr2, size);
-    std::cout << "Время: " << duration2.count() << " микросекунд" << std::endl;
+    cout << "Время: " << duration2.count() << " микросекунд" << endl;
+
+    string test1 = "A man, a plan, a canal: Panama";
+    string test2 = "race a car";
+    string test3 = "12321";
+    string test4 = "Madam, I0i'm Adam";
+
+    cout << boolalpha;
+    start = chrono::high_resolution_clock::now();
+    cout << "\"" << test1 << "\" -> " << isPalindrome(test1) << endl;
+    end = chrono::high_resolution_clock::now();
+    auto duration3 = chrono::duration_cast<chrono::nanoseconds>(end - start);
+    cout << "Время isPalindrome: " << duration2.count() << " микросекунд" << endl;
+
+    cout << "\"" << test2 << "\" -> " << isPalindrome(test2) << endl;
+    cout << "\"" << test3 << "\" -> " << isPalindrome(test3) << endl;
+    cout << "\"" << test4 << "\" -> " << isPalindrome(test4) << endl;
+    cout << noboolalpha;
 
     return 0;
 }
