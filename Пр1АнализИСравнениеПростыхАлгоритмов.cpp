@@ -93,6 +93,12 @@ bool isPalindrome2(string s) {
 }
 
 int main() {
+
+    // Устанавливаем локаль
+    setlocale(LC_ALL, "Russian");
+    // или для UTF-8:
+    // setlocale(LC_ALL, "ru_RU.UTF-8");
+
     const int size = 20;
     int arr1[size] = { 64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 164, 134, 125, 112, 122, 111, 190, 188, 176, 150 };
     int arr2[size] = { 64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 164, 134, 125, 112, 122, 111, 190, 188, 176, 150 };
@@ -142,7 +148,7 @@ int main() {
     cout << "\"" << test1 << "\" -> " << isPalindrome2(test1) << endl;
     auto end4 = chrono::high_resolution_clock::now();
     auto duration4 = chrono::duration_cast<chrono::nanoseconds>(end4 - start4);
-    cout << "Время isPalindrome: " << duration4.count() << " микросекунд" << endl;
+    cout << "Время isPalindrome2: " << duration4.count() << " микросекунд" << endl;
 
     cout << "\"" << test2 << "\" -> " << isPalindrome2(test2) << endl;
     cout << "\"" << test3 << "\" -> " << isPalindrome2(test3) << endl;
